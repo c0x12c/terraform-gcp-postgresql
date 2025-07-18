@@ -79,6 +79,12 @@ variable "database_flags" {
   default     = {}
 }
 
+variable "database_replica_flags" {
+  description = "The Cloud SQL replica instance database flags to create."
+  type        = map(string)
+  default     = {}
+}
+
 variable "enabled_deletion_protection" {
   description = "The boolean to specifies whether deletion protection should be enabled of disabled."
   type        = bool
@@ -97,6 +103,17 @@ variable "retained_backups_count" {
   default     = 7
 }
 
+variable "deletion_protection" {
+  type    = bool
+  default = true
+}
+
+variable "backup_location" {
+  description = "The location for backups. Defaults to 'us'."
+  type        = string
+  default     = "us"
+}
+
 variable "transaction_log_retention_days" {
   description = "The number of days of transaction logs we retain for point in time restore, from 1-7 for standard instance."
   type        = number
@@ -113,4 +130,18 @@ variable "enabled_disk_autoresize" {
   description = "Enables auto-resizing of the storage size. Defaults to true."
   type        = bool
   default     = true
+}
+
+variable "maintenance_window" {
+  description = "Maintenance window configuration for the master instance"
+  type = object({
+    day          = number
+    hour         = number
+    update_track = string
+  })
+  default = {
+    day          = 1 # Monday
+    hour         = 9 # 9:00 UTC
+    update_track = "stable"
+  }
 }

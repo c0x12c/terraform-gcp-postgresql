@@ -10,6 +10,14 @@ module "postgresql" {
   size     = 20
   username = "example-user"
 
+  database_flags = {
+    "max_connection" = "100"
+  }
+
+  database_replica_flags = {
+    "max_connection" = "400"
+  }
+
   replica_count          = 1
   analytic_replica_count = 1
 }
