@@ -91,12 +91,12 @@ resource "google_sql_database_instance" "replica" {
   master_instance_name = google_sql_database_instance.primary.name
 
   settings {
-    tier              = var.tier
-    disk_autoresize   = var.enabled_disk_autoresize
-    disk_size         = var.size
-    availability_type = var.availability_type
+    tier                        = var.tier
+    disk_autoresize             = var.enabled_disk_autoresize
+    disk_size                   = var.size
+    availability_type           = var.availability_type
     deletion_protection_enabled = var.enabled_deletion_protection
-    user_labels       = var.labels
+    user_labels                 = var.labels
 
     ip_configuration {
       ipv4_enabled    = false
@@ -142,12 +142,12 @@ resource "google_sql_database_instance" "analytic_replica" {
   master_instance_name = google_sql_database_instance.primary.name
 
   settings {
-    tier              = var.tier
-    disk_autoresize   = var.enabled_disk_autoresize
-    disk_size         = var.size
-    availability_type = var.availability_type
+    tier                        = var.tier
+    disk_autoresize             = var.enabled_disk_autoresize
+    disk_size                   = var.size
+    availability_type           = var.availability_type
     deletion_protection_enabled = var.enabled_deletion_protection
-    user_labels       = var.labels
+    user_labels                 = var.labels
 
     ip_configuration {
       ipv4_enabled    = false
