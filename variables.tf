@@ -103,11 +103,6 @@ variable "retained_backups_count" {
   default     = 7
 }
 
-variable "deletion_protection" {
-  type    = bool
-  default = true
-}
-
 variable "backup_location" {
   description = "The location for backups. Defaults to 'us'."
   type        = string

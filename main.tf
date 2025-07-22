@@ -30,7 +30,7 @@ resource "google_sql_database_instance" "primary" {
     disk_autoresize             = var.enabled_disk_autoresize
     disk_size                   = var.size
     availability_type           = var.availability_type
-    deletion_protection_enabled = var.deletion_protection
+    deletion_protection_enabled = var.enabled_deletion_protection
     user_labels                 = var.labels
 
     ip_configuration {
@@ -95,6 +95,7 @@ resource "google_sql_database_instance" "replica" {
     disk_autoresize   = var.enabled_disk_autoresize
     disk_size         = var.size
     availability_type = var.availability_type
+    deletion_protection_enabled = var.enabled_deletion_protection
     user_labels       = var.labels
 
     ip_configuration {
@@ -145,6 +146,7 @@ resource "google_sql_database_instance" "analytic_replica" {
     disk_autoresize   = var.enabled_disk_autoresize
     disk_size         = var.size
     availability_type = var.availability_type
+    deletion_protection_enabled = var.enabled_deletion_protection
     user_labels       = var.labels
 
     ip_configuration {
