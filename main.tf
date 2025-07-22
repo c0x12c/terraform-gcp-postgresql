@@ -1,4 +1,11 @@
 /**
+This `google_client_config` data source retrieves the current authenticated user's Google Cloud configuration.
+https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/client_config
+ */
+
+data "google_client_config" "this" {}
+
+/**
 `google_compute_network` data source retrieves an existing network within Google Cloud Project from its name.
 https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/compute_network
  */
@@ -19,11 +26,12 @@ resource "google_sql_database_instance" "primary" {
   deletion_protection = var.enabled_deletion_protection
 
   settings {
-    tier              = var.tier
-    disk_autoresize   = var.enabled_disk_autoresize
-    disk_size         = var.size
-    availability_type = var.availability_type
-    user_labels       = var.labels
+    tier                        = var.tier
+    disk_autoresize             = var.enabled_disk_autoresize
+    disk_size                   = var.size
+    availability_type           = var.availability_type
+    deletion_protection_enabled = var.deletion_protection
+    user_labels                 = var.labels
 
     ip_configuration {
       ipv4_enabled    = false
@@ -40,6 +48,7 @@ resource "google_sql_database_instance" "primary" {
 
     backup_configuration {
       enabled    = true
+      location   = var.backup_location
       start_time = var.daily_sql_instance_backup_start_time
 
       point_in_time_recovery_enabled = true
@@ -49,6 +58,12 @@ resource "google_sql_database_instance" "primary" {
         retention_unit   = "COUNT"
         retained_backups = var.retained_backups_count
       }
+    }
+
+    maintenance_window {
+      hour         = var.maintenance_window.hour
+      update_track = var.maintenance_window.update_track
+      day          = var.maintenance_window.day
     }
   }
 
@@ -93,7 +108,7 @@ resource "google_sql_database_instance" "replica" {
     }
 
     dynamic "database_flags" {
-      for_each = var.database_flags
+      for_each = var.database_replica_flags
 
       content {
         name  = database_flags.key
